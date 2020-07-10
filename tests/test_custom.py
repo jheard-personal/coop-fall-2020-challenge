@@ -2,7 +2,7 @@ import pytest
 
 from solution_python import EventSourcer
 
-def test_multiply_0():
+def test_multiply():
     sourcer = EventSourcer()
 
     sourcer.add(2)
