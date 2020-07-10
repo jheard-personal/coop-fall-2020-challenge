@@ -30,17 +30,6 @@ class EventSourcer():
         self.events.append(Event(self.value, num, Events.SUBTRACT))
         self.value -= num
 
-    def multiply(self, num: int):
-        self.current_event += 1
-        self.events.append(Event(self.value, num, Events.MULTIPLY))
-        self.value *= num
-
-    # Note: this performs integer division, and will floor the result
-    def divide(self, num: int):
-        self.current_event += 1
-        self.events.append(Event(self.value, num, Events.DIVIDE))
-        self.value //= num
-
     def undo(self):
         # Nothing to undo
         if self.current_event == -1:
@@ -63,6 +52,17 @@ class EventSourcer():
     def bulk_redo(self, steps: int):
         for _ in range(steps):
             self.redo()
+
+    def multiply(self, num: int):
+        self.current_event += 1
+        self.events.append(Event(self.value, num, Events.MULTIPLY))
+        self.value *= num
+
+    # Note: this performs integer division, and will floor the result
+    def divide(self, num: int):
+        self.current_event += 1
+        self.events.append(Event(self.value, num, Events.DIVIDE))
+        self.value //= num
 
     def __do_event(self, ev: Event):
         if ev.event == Events.ADD:
