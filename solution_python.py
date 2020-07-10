@@ -5,6 +5,7 @@ class Events(Enum):
     SUBTRACT = 2
     MULTIPLY = 3
     DIVIDE = 4
+    POW = 5
 
 class Event():
     def __init__(self, value, change, event):
@@ -14,6 +15,14 @@ class Event():
 
 class EventSourcer():
     # Do not change the signature of any functions
+
+    EVENT_FUNCTIONS = {
+        Events.ADD      : lambda x,y: x+y,
+        Events.SUBTRACT : lambda x,y: x-y,
+        Events.MULTIPLY : lambda x,y: x*y,
+        Events.DIVIDE   : lambda x,y: x//y,
+        Events.POW      : lambda x,y: x**y
+    }
 
     def __init__(self):
         self.value = 0
@@ -42,7 +51,8 @@ class EventSourcer():
         if self.current_event == len(self.events)-1:
             return
         ev = self.events[self.current_event]
-        self.__do_event(ev)
+        func = EventSourcer.EVENT_FUNCTIONS[ev.event]
+        self.value = func(self.value, ev.change)
         self.current_event += 1
 
     def bulk_undo(self, steps: int):
@@ -64,12 +74,7 @@ class EventSourcer():
         self.events.append(Event(self.value, num, Events.DIVIDE))
         self.value //= num
 
-    def __do_event(self, ev: Event):
-        if ev.event == Events.ADD:
-            self.value += ev.change
-        if ev.event == Events.SUBTRACT:
-            self.value -= ev.change
-        if ev.event == Events.MULTIPLY:
-            self.value *= ev.change
-        if ev.event == Events.DIVIDE:
-            self.value //= ev.change
+    def pow(self, num: float):
+        self.current_event += 1
+        self.events.append(Event(self.value, num, Events.POW))
+        self.value **= num
