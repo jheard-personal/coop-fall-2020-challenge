@@ -10,7 +10,6 @@ def test_multiply_0():
     
     assert sourcer.value == 4
 
-
 def test_multiply_0():
     sourcer = EventSourcer()
 
@@ -41,3 +40,20 @@ def test_divide_big_divisor():
     sourcer.divide(3)
     
     assert sourcer.value == 0
+
+def test_pow():
+    sourcer = EventSourcer()
+
+    sourcer.add(2)
+    sourcer.pow(3)
+    
+    assert sourcer.value == 8
+
+def test_pow_float():
+    sourcer = EventSourcer()
+
+    sourcer.add(4)
+    sourcer.pow(0.5)
+    
+    assert sourcer.value == 2
+    assert isinstance(sourcer.value, int)

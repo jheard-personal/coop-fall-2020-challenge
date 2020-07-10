@@ -77,4 +77,4 @@ class EventSourcer():
     def pow(self, num: float):
         self.current_event += 1
         self.events.append(Event(self.value, num, Events.POW))
-        self.value **= num
+        self.value = int(self.value ** num)
