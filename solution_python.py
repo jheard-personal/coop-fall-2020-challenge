@@ -21,7 +21,7 @@ class EventSourcer():
         Events.SUBTRACT : lambda x,y: x-y,
         Events.MULTIPLY : lambda x,y: x*y,
         Events.DIVIDE   : lambda x,y: x//y,
-        Events.POW      : lambda x,y: x**y
+        Events.POW      : lambda x,y: int(x**y)
     }
 
     def __init__(self):
